@@ -1,0 +1,15 @@
+(\
+nitrogen --restore && \
+cb-compositor --start && \
+tint2 \
+) &
+
+pnmixer &
+
+xfce4-volumed-pulse &
+
+xfce4-power-manager &
+
+sudo wpa_gui &
+
+thunar --deamon &
