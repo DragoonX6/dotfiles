@@ -1,0 +1,9 @@
+{
+  "include" : [
+    "default/wide-latin"
+  ],
+  "define" : {
+    "keymap" : {
+    }
+  }
+}

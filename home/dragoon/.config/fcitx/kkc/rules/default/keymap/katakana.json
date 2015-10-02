@@ -1,0 +1,10 @@
+{
+  "include" : [
+    "default/katakana"
+  ],
+  "define" : {
+    "keymap" : {
+      "(alt h)" : "set-input-mode-hiragana"
+    }
+  }
+}
