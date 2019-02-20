@@ -1,0 +1,78 @@
+snippet class "class .. (class)"
+class ${1:name}
+{
+public:
+	$1() = default;
+	$1($1 const &other) = default;
+	$1($1 &&other) noexcept = default;
+	~$1() noexcept = default;
+
+	$1 &operator=($1 const &other) = default;
+	$1 &operator=($1 &&other) noexcept = default;
+};
+
+static_assert(std::is_copy_constructible<$1>::value);
+static_assert(std::is_copy_assignable<$1>::value);
+static_assert(std::is_trivially_copyable<$1>::value);
+
+static_assert(std::is_move_constructible<$1>::value);
+static_assert(std::is_move_assignable<$1>::value);
+endsnippet
+
+snippet bclass "bclass .. (base class)"
+class ${1:name}
+{
+public:
+	$1() = default;
+	$1($1 const &other) = default;
+	$1($1 &&other) noexcept = default;
+	virtual ~$1() noexcept = default;
+
+	$1 &operator=($1 const &other) = default;
+	$1 &operator=($1 &&other) noexcept = default;
+};
+
+static_assert(std::is_copy_constructible<$1>::value);
+static_assert(std::is_copy_assignable<$1>::value);
+static_assert(std::is_trivially_copyable<$1>::value);
+
+static_assert(std::is_move_constructible<$1>::value);
+static_assert(std::is_move_assignable<$1>::value);
+endsnippet
+
+snippet oclass "oclass .. (overriding class)"
+class ${1:name}: public ${2:base}
+{
+public:
+	$1() = default;
+	$1($1 const &other) = default;
+	$1($1 &&other) noexcept = default;
+	virtual ~$1() noexcept override = default;
+
+	$1 &operator=($1 const &other) = default;
+	$1 &operator=($1 &&other) noexcept = default;
+};
+
+static_assert(std::is_copy_constructible<$1>::value);
+static_assert(std::is_copy_assignable<$1>::value);
+static_assert(std::is_trivially_copyable<$1>::value);
+
+static_assert(std::is_move_constructible<$1>::value);
+static_assert(std::is_move_assignable<$1>::value);
+endsnippet
+
+snippet namespace "namespace .. (namespace)"
+namespace ${1:name}
+{
+${VISUAL}$0
+} // namespace $1
+endsnippet
+
+snippet incg "incg .. (include guard)"
+#ifndef ${1:guard}
+#define $1
+
+${VISUAL}$0
+
+#endif // $1
+endsnippet
