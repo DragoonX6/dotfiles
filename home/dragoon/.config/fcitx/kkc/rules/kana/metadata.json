@@ -1,6 +1,0 @@
-{
-  "name" : "fcitx-kkc:kana",
-  "description" : "Direct Kana typing",
-  "filter" : "kana",
-  "priority" : 99
-}
