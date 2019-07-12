@@ -11,12 +11,12 @@ public:
 	$1 &operator=($1 &&other) noexcept = default;
 };
 
-static_assert(std::is_copy_constructible<$1>::value);
-static_assert(std::is_copy_assignable<$1>::value);
-static_assert(std::is_trivially_copyable<$1>::value);
+static_assert(std::is_copy_constructible_v<$1>);
+static_assert(std::is_copy_assignable_v<$1>);
+static_assert(std::is_trivially_copyable_v<$1>);
 
-static_assert(std::is_move_constructible<$1>::value);
-static_assert(std::is_move_assignable<$1>::value);
+static_assert(std::is_move_constructible_v<$1>);
+static_assert(std::is_move_assignable_v<$1>);
 endsnippet
 
 snippet bclass "bclass .. (base class)"
@@ -32,12 +32,12 @@ public:
 	$1 &operator=($1 &&other) noexcept = default;
 };
 
-static_assert(std::is_copy_constructible<$1>::value);
-static_assert(std::is_copy_assignable<$1>::value);
-static_assert(std::is_trivially_copyable<$1>::value);
+static_assert(std::is_copy_constructible_v<$1>);
+static_assert(std::is_copy_assignable_v<$1>);
+static_assert(std::is_trivially_copyable_v<$1>);
 
-static_assert(std::is_move_constructible<$1>::value);
-static_assert(std::is_move_assignable<$1>::value);
+static_assert(std::is_move_constructible_v<$1>);
+static_assert(std::is_move_assignable_v<$1>);
 endsnippet
 
 snippet oclass "oclass .. (overriding class)"
@@ -53,12 +53,12 @@ public:
 	$1 &operator=($1 &&other) noexcept = default;
 };
 
-static_assert(std::is_copy_constructible<$1>::value);
-static_assert(std::is_copy_assignable<$1>::value);
-static_assert(std::is_trivially_copyable<$1>::value);
+static_assert(std::is_copy_constructible_v<$1>);
+static_assert(std::is_copy_assignable_v<$1>);
+static_assert(std::is_trivially_copyable_v<$1>);
 
-static_assert(std::is_move_constructible<$1>::value);
-static_assert(std::is_move_assignable<$1>::value);
+static_assert(std::is_move_constructible_v<$1>);
+static_assert(std::is_move_assignable_v<$1>);
 endsnippet
 
 snippet namespace "namespace .. (namespace)"

@@ -5,7 +5,7 @@ set rtp+=$HOME/.vim/bundle/Vundle.vim
 call vundle#begin('$HOME/.vim/bundle')
 Plugin 'VundleVim/Vundle.vim'
 " Plugin 'oblitum/YouCompleteMe'
-Plugin 'Valloric/YouCompleteMe'
+"Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/nerdtree'
 Plugin 'majutsushi/tagbar'
 Plugin 'godlygeek/tabular'
@@ -21,6 +21,8 @@ Plugin 'tikhomirov/vim-glsl'
 Plugin 'SirVer/ultisnips'
 Plugin 'romainl/vim-qf'
 Plugin 'Konfekt/vim-alias'
+Plugin 'neoclide/coc.nvim'
+Plugin 'terryma/vim-multiple-cursors'
 call vundle#end()
 
 filetype plugin indent on
@@ -78,15 +80,17 @@ fun! TrimWhitespace()
 	keeppatterns %s/\s\+$//e
 	call winrestview(l:save)
 endfun
-autocmd BufWritePre * if(index(['diff'], &ft)) < 0 | :call TrimWhitespace()
+autocmd BufWritePre * if(index(['diff', 'markdown'], &ft)) < 0 | :call TrimWhitespace()
 
 " Airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
-let g:airline_extensions = ['tabline', 'ycm']
-let g:airline#extensions#ycm#enabled = 1
-let g:airline#extensions#ycm#error_symbol = 'E:'
-let g:airline#extensions#ycm#warning_symbol = 'W:'
+let g:airline_extensions = ['tabline', 'coc']
+" let g:airline#extensions#ycm#enabled = 1
+" let g:airline#extensions#ycm#error_symbol = 'E:'
+" let g:airline#extensions#ycm#warning_symbol = 'W:'
+let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
+let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
 
 function! WindowNumber(...)
 	let builder = a:1
@@ -101,10 +105,26 @@ if !empty(glob("$HOME/.vim/bundle/vim-airline"))
 endif
 " End GUI stuffs
 
+map <F3> :noh<CR>
+
 " Cpp
-let g:ycm_server_keep_logfiles = 0
-let g:ycm_server_log_level = 'debug'
-let g:ycm_confirm_extra_conf = 0
+"let g:ycm_server_keep_logfiles = 0
+"let g:ycm_server_log_level = 'debug'
+"let g:ycm_confirm_extra_conf = 0
+"let g:ycm_use_clangd = 1
+"let g:ycm_clangd_args = ["-compile-commands-dir=" . getcwd() . "/build"]
+"map <F2> :YcmCompleter GoTo<CR>
+
+" CCLS
+inoremap <silent><expr> <c-space> coc#refresh()
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+
+map <silent> <F2> :call CocLocations('ccls', 'textDocument/definition')<CR>
+nnoremap <silent> K :call CocActionAsync('doHover')<CR>
 
 " cpp syntax hilight
 let g:cpp_class_scope_highlight = 1
@@ -114,9 +134,7 @@ let g:cpp_experimental_template_highlight = 1
 set cinoptions=N-s,i-s,=0,b1,(0,W4,g0,t0,p0,j1
 
 set tabstop=4 shiftwidth=4 noexpandtab
-set makeprg ="python3 ./waf build"
+"set makeprg ="python3 ./waf build"
 
 map <F4> :e %:p:s,.hpp$,.X123X,:s,.cpp$,.hpp,:s,.X123X$,.cpp,<CR>
 map <F5> :e %:p:s,_impl.hpp$,.X123X,:s,.hpp$,_impl.hpp,:s,.X123X$,.hpp,<CR>
-map <F2> :YcmCompleter GoTo<CR>
-map <F3> :noh<CR>
