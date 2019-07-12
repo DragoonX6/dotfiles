@@ -36,6 +36,9 @@ super + l
 super + Escape
 	pkill -USR1 -x sxhkd
 
+super + ctrl + semicolon
+	sleep 1 && xset dpms force off && /opt/i3lock-multimonitor/lock
+
 #
 # bspwm hotkeys
 #
@@ -109,6 +112,12 @@ super + {o,i}
 # focus or send to the given desktop
 super + {_,shift + }{1-9,0}
 	bspc {desktop -f,node -d} '^{1-9,10}'
+
+super + {_,shift + }{F1,F2,F3,F4,F5,F6,F7,F8,F9,F10}
+	bspc {desktop -f,node -d} '^{11,12,13,14,15,16,17,18,19,20}'
+
+super + F11
+	bspc desktop -f ^11
 
 # move the node to the selection
 super + ctrl + Return

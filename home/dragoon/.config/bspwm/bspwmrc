@@ -4,12 +4,7 @@ xsetroot -cursor_name left_ptr &
 
 sxhkd &
 
-if glxinfo | egrep -iq 'direct rendering: yes'; then
-	EXECOMP='compton --vsync opengl'
-else
-	EXECOMP='compton'
-fi
-$EXECOMP &
+compton &
 
 nitrogen --restore &
 
@@ -21,17 +16,17 @@ thunar --deamon &
 
 setxbkmap us altgr-intl &
 xset b 100&
-xset mouse 2 10 &
+xset mouse 1 1 &
 numlockx on &
 
-[ ! -s ~/.mpd/pid ] && mpd &
+#[ ! -s ~/.mpd/pid ] && mpd &
 
 fcitx-autostart &
 
 parcellite &
 
-bspc monitor DP-2 -d I II III IV V VI VII
-bspc monitor DP-0 -d VI VII IX X
+bspc monitor DP-2 -d I II III IV V VI VII VIII IX X
+bspc monitor DP-0 -d XI XII XIII XIV XV XVI XVII XVIII XIX XX
 
 bspc config border_width         2
 #bspc config window_gap           12
