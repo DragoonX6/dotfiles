@@ -23,6 +23,7 @@ Plugin 'romainl/vim-qf'
 Plugin 'Konfekt/vim-alias'
 Plugin 'neoclide/coc.nvim'
 Plugin 'terryma/vim-multiple-cursors'
+Plugin 'idanarye/vim-dutyl'
 call vundle#end()
 
 filetype plugin indent on
@@ -40,11 +41,15 @@ if has('persistent_undo')
 	let &undodir = myUndoDir
 endif
 
+" Force encoding to UTF-8
+set encoding=utf8
+
 " GUI stuffs
 " vim line
 set colorcolumn=80
 highlight ColorColumn ctermbg=Grey guibg=DarkGrey
 
+" fancy colors
 try
 	colorscheme desertEx
 	" Make caret small and set color to white
@@ -138,3 +143,12 @@ set tabstop=4 shiftwidth=4 noexpandtab
 
 map <F4> :e %:p:s,.hpp$,.X123X,:s,.cpp$,.hpp,:s,.X123X$,.cpp,<CR>
 map <F5> :e %:p:s,_impl.hpp$,.X123X,:s,.hpp$,_impl.hpp,:s,.X123X$,.hpp,<CR>
+
+" D settings
+let g:dutyl_stdImportPaths = ['/usr/include/dlang/dmd']
+let g:dutyl_neverAddClosingParen = 1
+let g:dutyl_dontHandleFormat = 1
+let g:dutyl_dontHandleIndent = 1
+
+" Snippets
+let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
