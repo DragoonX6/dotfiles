@@ -4,17 +4,28 @@ xsetroot -cursor_name left_ptr &
 
 sxhkd &
 
-compton &
+if [ $(hostname) = judgement ]
+then
+	if glxinfo | egrep -iq 'direct rendering: yes'; then
+		EXECOMP='compton --vsync opengl'
+	else
+		EXECOMP='compton'
+	fi
+	$EXECOMP &
+else
+	compton &
+fi
 
 nitrogen --restore &
 
 tint2 &
 
 pnmixer &
+[ $(hostname) = judgement ] && xfce4-power-manager &
 
 thunar --deamon &
 
-setxbkmap us altgr-intl &
+setxkbmap us altgr-intl &
 xset b 100&
 xset mouse 1 1 &
 numlockx on &
@@ -25,8 +36,15 @@ fcitx-autostart &
 
 parcellite &
 
-bspc monitor DP-2 -d I II III IV V VI VII VIII IX X
-bspc monitor DP-0 -d XI XII XIII XIV XV XVI XVII XVIII XIX XX
+if [ $(hostname) = judgement ]
+then
+	bspc wm -O DP-0 HDMI-0
+	bspc monitor DP-0 -d I II III IV V VI VII VIII IX X
+	bspc monitor HDMI-0 -d XI XII XIII XIV XV XVI XVII XVIII XIX XX
+else
+	bspc monitor DP-2 -d I II III IV V VI VII VIII IX X
+	bspc monitor DP-0 -d XI XII XIII XIV XV XVI XVII XVIII XIX XX
+fi
 
 bspc config border_width         2
 #bspc config window_gap           12
