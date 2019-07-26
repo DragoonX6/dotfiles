@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+main() {
+	wid="$1"
+	class="$2"
+	instance="$3"
+
+	if xprop -id $wid WM_WINDOW_ROLE 2> /dev/null | grep -q \"MainWindow\#2\"; then
+		echo "state=floating"
+	fi
+}
+
+main "$@"
