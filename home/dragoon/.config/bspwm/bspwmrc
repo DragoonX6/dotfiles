@@ -4,17 +4,7 @@ xsetroot -cursor_name left_ptr &
 
 sxhkd &
 
-if [ $(hostname) = judgement ]
-then
-	if glxinfo | egrep -iq 'direct rendering: yes'; then
-		EXECOMP='compton --vsync opengl'
-	else
-		EXECOMP='compton'
-	fi
-	$EXECOMP &
-else
-	compton &
-fi
+compton &
 
 nitrogen --restore &
 
