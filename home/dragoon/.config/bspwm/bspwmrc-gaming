@@ -4,37 +4,20 @@ xsetroot -cursor_name left_ptr &
 
 sxhkd &
 
-compton &
-
-nitrogen --restore &
-
 tint2 &
 
 pnmixer &
-[ $(hostname) = judgement ] && xfce4-power-manager &
-
-thunar --deamon &
 
 setxkbmap -layout us -variant euro -option compose:ralt &
 xset b 100 &
 xset mouse 1 1 &
 numlockx on &
 
-#[ ! -s ~/.mpd/pid ] && mpd &
-
 fcitx-autostart &
 
 parcellite &
 
-if [ $(hostname) = judgement ]
-then
-	bspc wm -O DP-0 HDMI-0
-	bspc monitor DP-0 -d I II III IV V VI VII VIII IX X
-	bspc monitor HDMI-0 -d XI XII XIII XIV XV XVI XVII XVIII XIX XX
-else
-	bspc monitor ^1 -d I II III IV V VI VII VIII IX X
-	bspc monitor ^2 -d XI XII XIII XIV XV XVI XVII XVIII XIX XX
-fi
+bspc monitor ^1 -d I II III IV V VI VII VIII IX X
 
 bspc config border_width         2
 #bspc config window_gap           12
@@ -47,11 +30,6 @@ bspc config click_to_focus       true
 
 bspc config initial_polarity second_child # Spawn windows on the right side
 
-#bspc rule -a Gimp desktop='^8' state=floating follow=on
-#bspc rule -a Chromium desktop='^2'
-#bspc rule -a mplayer2 state=floating
-#bspc rule -a Kupfer.py focus=on
-#bspc rule -a Screenkey manage=off
 bspc rule -a tint2 layer=below
 
 bspc config external_rules_command "$HOME/.config/bspwm/external_rules"
