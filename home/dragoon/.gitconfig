@@ -1,0 +1,25 @@
+[push]
+	defaut = matching
+	default = simple
+[core]
+	editor = vim
+	pager = less -x1,5
+[mergetool "p4merge"]
+	cmd = p4merge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
+	trustExitCode = false
+[merge]
+	tool = p4merge
+[diff]
+	tool = p4merge
+[difftool "p4merge"]
+	cmd = p4merge "$LOCAL" "$REMOTE"
+[difftool]
+	prompt = true
+[merge "ours"]
+	driver = true
+[alias]
+	st = status
+	lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+	lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+[pull]
+	rebase = yes
