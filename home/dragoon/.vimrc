@@ -21,9 +21,10 @@ Plugin 'tikhomirov/vim-glsl'
 Plugin 'SirVer/ultisnips'
 Plugin 'romainl/vim-qf'
 Plugin 'Konfekt/vim-alias'
-"Plugin 'neoclide/coc.nvim'
+" Plugin 'neoclide/coc.nvim'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'idanarye/vim-dutyl'
+" Plugin 'OmniSharp/omnisharp-vim'
 call vundle#end()
 
 filetype plugin indent on
@@ -113,38 +114,23 @@ endif
 map <F3> :noh<CR>
 
 " Cpp
-let g:ycm_server_keep_logfiles = 0
-let g:ycm_server_log_level = 'debug'
-let g:ycm_confirm_extra_conf = 0
+"let g:ycm_server_keep_logfiles = 0
+"let g:ycm_server_log_level = 'debug'
+"let g:ycm_confirm_extra_conf = 0
 "let g:ycm_use_clangd = 1
 "let g:ycm_clangd_args = ["-compile-commands-dir=" . getcwd() . "/build"]
-let g:ycm_language_server =
-	\ [{
-	\	'name': 'ccls',
-	\	'cmdline': ['ccls'],
-	\	'filetypes': ['c', 'cpp'],
-	\	'project_root_files':
-	\	[
-	\		'.ccls',
-	\		'compile_commands.json',
-	\		'.git/',
-	\		'.hg/',
-	\		'.ccls_root'
-	\	]
-	\ }]
-
-map <F2> :YcmCompleter GoTo<CR>
+"map <F2> :YcmCompleter GoTo<CR>
 
 " CCLS
-" inoremap <silent><expr> <c-space> coc#refresh()
-" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <silent><expr> <c-space> coc#refresh()
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
-" autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
-" map <silent> <F2> :call CocLocations('ccls', 'textDocument/definition')<CR>
-" nnoremap <silent> K :call CocActionAsync('doHover')<CR>
+map <silent> <F2> :call CocLocations('ccls', 'textDocument/definition')<CR>
+nnoremap <silent> K :call CocActionAsync('doHover')<CR>
 
 " cpp syntax hilight
 let g:cpp_class_scope_highlight = 1
@@ -167,3 +153,6 @@ let g:dutyl_dontHandleIndent = 1
 
 " Snippets
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
+
+" let g:OmniSharp_server_stdio = 1
+" let g:OmniSharp_loglevel = 'debug'
