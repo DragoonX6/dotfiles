@@ -56,6 +56,7 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 export PATH=$HOME/bin:$PATH
+export P4CONFIG=.p4config
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
