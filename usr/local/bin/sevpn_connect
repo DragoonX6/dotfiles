@@ -1,0 +1,25 @@
+#!/bin/sh
+
+set -ex;
+
+HOST=`vpncmd localhost -client -cmd AccountList | grep -A 2 "$1" | grep Hostname | cut -d \| -f 2 | cut -d : -f 1`;
+DEVICE=vpn_`vpncmd localhost -client -cmd AccountList | grep -A 4 "$1" | grep Network | cut -d \| -f 2 | tr '[[:upper:]]' '[[:lower:]]'`;
+HOST_DEVICE=`ip link | grep "state UP" | grep enp | awk -F ': ' '{ print $2 }'`;
+GATEWAY=`ip route | grep $HOST_DEVICE | head -1 | cut -d ' ' -f 3`;
+IPV4=`getent hosts $HOST | cut -d ' ' -f 2 | xargs getent ahostsv4 | cut -d ' ' -f 1 | tail -1`;
+
+vpncmd localhost -CLIENT -CMD AccountConnect "$1";
+
+sudo dhcpcd --metric 1 -n $DEVICE;
+
+set +e;
+RES=1;
+while [ $RES -eq 1 ];
+do;
+	sleep 1;
+	ip addr show dev $DEVICE | grep "inet\ ";
+	RES=$?;
+done;
+set -e;
+
+sudo ip route add $IPV4 via $GATEWAY dev $HOST_DEVICE;

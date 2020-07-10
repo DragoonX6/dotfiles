@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -ex;
+
+HOST=`vpncmd localhost -client -cmd AccountList | grep -A 2 "$1" | grep Hostname | cut -d \| -f 2 | cut -d : -f 1`;
+DEVICE=vpn_`vpncmd localhost -client -cmd AccountList | grep -A 4 "$1" | grep Network | cut -d \| -f 2 | tr '[[:upper:]]' '[[:lower:]]'`;
+HOST_DEVICE=`ip link | grep "state UP" | grep enp | awk -F ': ' '{ print $2 }'`;
+GATEWAY=`ip route | grep $HOST_DEVICE | head -1 | cut -d ' ' -f 3`;
+IPV4=`getent hosts $HOST | cut -d ' ' -f 2 | xargs getent ahostsv4 | cut -d ' ' -f 1 | tail -1`;
+
+sudo dhcpcd -k $DEVICE;
+sudo ip route del $IPV4 via $GATEWAY dev $HOST_DEVICE;
+
+vpncmd localhost -CLIENT -CMD AccountDisconnect "$1";
