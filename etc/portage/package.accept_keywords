@@ -1,0 +1,69 @@
+sys-kernel/zen-sources ~amd64
+# required by @preserved-rebuild (argument)
+=net-wireless/wpa_supplicant-9999 **
+sys-fs/cryptsetup ~amd64
+media-sound/teamspeak-client ~amd64
+# required by app-antivirus/clamtk-6.00::gentoo
+# required by app-antivirus/clamtk (argument)
+=dev-perl/LWP-UserAgent-Cached-0.60.0-r1 ~amd64
+# required by app-antivirus/clamtk-6.00::gentoo
+# required by app-antivirus/clamtk (argument)
+=dev-perl/Gtk3-0.34.0 ~amd64
+# required by app-antivirus/clamtk (argument)
+=app-antivirus/clamtk-6.00 ~amd64
+# required by dev-perl/Gtk3-0.34.0::gentoo
+# required by app-antivirus/clamtk-6.00::gentoo
+# required by app-antivirus/clamtk (argument)
+=dev-perl/Cairo-GObject-1.4.0-r1 ~amd64
+# required by @__auto_slot_operator_replace_installed__ (argument)
+=media-gfx/maim-5.5.3 ~amd64
+# required by @__auto_slot_operator_replace_installed__ (argument)
+=x11-misc/slop-7.4 ~amd64
+# required by ccls (argument)
+=dev-util/ccls-9999 **
+# required by dotnetcore-sdk-bin (argument)
+dev-dotnet/dotnetcore-sdk-bin ~amd64
+dev-dotnet/dotnetcore-sdk-bin-common ~amd64
+# required by dev-lang/mono-5.20.1.19-r1::gentoo[-minimal]
+# required by @selected
+# required by @world (argument)
+>=dev-dotnet/libgdiplus-5.6.1-r1 ~amd64
+# required by =dev-lang/mono-5.20.1.19-r1 (argument)
+>=dev-lang/mono-5.20.1.19-r1 ~amd64
+# required by dev-dotnet/msbuild-defaulttasks-15.3-r3::dotnet
+# required by dev-dotnet/msbuild-roslyn-csc-15.3-r1::dotnet
+# required by dev-util/msbuild-15.3-r3::dotnet[roslyn]
+# required by dev-util/msbuild (argument)
+=dev-dotnet/msbuild-tasks-api-15.3-r1 ~amd64
+# required by dev-dotnet/msbuild-defaulttasks-15.3-r3::dotnet
+# required by dev-dotnet/msbuild-roslyn-csc-15.3-r1::dotnet
+# required by dev-util/msbuild-15.3-r3::dotnet[roslyn]
+# required by dev-util/msbuild (argument)
+=dev-dotnet/system-collections-immutable-2.0.0_pre-r1 ~amd64
+# required by dev-util/msbuild-15.3-r3::dotnet
+# required by dev-util/msbuild (argument)
+=dev-dotnet/msbuild-defaulttasks-15.3-r3 ~amd64
+# required by dev-dotnet/msbuild-defaulttasks-15.3-r3::dotnet
+# required by dev-dotnet/msbuild-roslyn-csc-15.3-r1::dotnet
+# required by dev-util/msbuild-15.3-r3::dotnet[roslyn]
+# required by dev-util/msbuild (argument)
+=dev-dotnet/system-reflection-metadata-2.0.0_pre-r1 ~amd64
+# required by dev-util/msbuild-15.3-r3::dotnet[roslyn]
+# required by dev-util/msbuild (argument)
+=dev-dotnet/msbuild-roslyn-csc-15.3-r1 ~amd64
+# required by dev-util/msbuild-15.3-r3::dotnet
+# required by dev-util/msbuild (argument)
+=dev-dotnet/buildtools-1.0.27-r1 ~amd64
+# required by dev-dotnet/buildtools-1.0.27-r1::dotnet
+# required by dev-dotnet/system-reflection-metadata-2.0.0_pre-r1::dotnet
+# required by dev-dotnet/msbuild-defaulttasks-15.3-r3::dotnet
+# required by dev-dotnet/msbuild-roslyn-csc-15.3-r1::dotnet
+# required by dev-util/msbuild-15.3-r3::dotnet[roslyn]
+# required by dev-util/msbuild (argument)
+=dev-dotnet/newtonsoft-json-6.0.8-r1 ~amd64
+# required by dev-util/msbuild (argument)
+=dev-util/msbuild-15.3-r3 ~amd64
+# required by app-editors/vscode-bin (argument)
+>=app-editors/vscode-bin-1.36.1 ~amd64
+=dev-util/qbs-1.14.1 ~amd64
+=dev-qt/qt-creator-4.10.1 ~amd64

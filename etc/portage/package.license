@@ -1,0 +1,18 @@
+# required by media-sound/teamspeak-client (argument)
+>=media-sound/teamspeak-client-3.1.10 teamspeak3
+# required by net-misc/teamviewer (argument)
+>=net-misc/teamviewer-13.1.8286 TeamViewer
+# required by app-admin/lastpass-binary-component (argument)
+>=app-admin/lastpass-binary-component-4.1.44_p20171210 LastPass
+app-crypt/veracrypt truecrypt-3.0
+x11-drivers/nvidia-drivers NVIDIA-r2
+media-fonts/corefonts MSttfEULA
+media-fonts/kochi-substitute free-noncomm
+sys-kernel/zen-sources linux-firmware
+sys-kernel/linux-firmware linux-firmware no-source-code linux-fw-redistributable
+net-im/telegram-desktop-bin telegram
+net-im/discord-bin all-rights-reserved
+app-arch/unrar unRAR
+sys-firmware/intel-microcode intel-ucode
+# required by app-editors/vscode-bin (argument)
+>=app-editors/vscode-bin-1.36.1 MS-vscode-EULA

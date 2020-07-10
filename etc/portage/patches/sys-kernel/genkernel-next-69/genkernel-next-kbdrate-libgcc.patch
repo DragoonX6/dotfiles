@@ -1,0 +1,69 @@
+diff --git a/defaults/initrd.d/00-devmgr.sh b/defaults/initrd.d/00-devmgr.sh
+index 8ee3c8a..377aea7 100755
+--- a/defaults/initrd.d/00-devmgr.sh
++++ b/defaults/initrd.d/00-devmgr.sh
+@@ -20,6 +20,7 @@ devmgr_init() {
+         "${UDEVD}" --daemon --resolve-names=never && \
+             udevadm trigger --action=add && \
+             udevadm settle || bad_msg "udevd failed to run"
++        kbdrate -r 30 -d 500
+     elif is_mdev; then
+         good_msg "Activating mdev"
+         # Ensure that device nodes are properly configured
+diff --git a/gen_initramfs.sh b/gen_initramfs.sh
+index 8c4817e..11b77a3 100755
+--- a/gen_initramfs.sh
++++ b/gen_initramfs.sh
+@@ -184,6 +184,23 @@ append_busybox() {
+     rm -rf "${TEMP}/initramfs-busybox-temp" > /dev/null
+ }
+ 
++append_kbdrate(){
++    if [ -d "${TEMP}"/initramfs-kbdrate-temp ]
++    then
++        rm -r "${TEMP}"/initramfs-kbdrate-temp
++    fi
++
++    cd "${TEMP}" \
++            || gen_dir "cd '${TEMP}' failed"
++    mkdir -p initramfs-kbdrate-temp
++    copy_binaries "${TEMP}"/initramfs-kbdrate-temp/ /usr/bin/kbdrate
++
++    cd "${TEMP}"/initramfs-kbdrate-temp \
++            || gen_die "cd '${TEMP}/initramfs-kbdrate-temp' failed"
++    find . -print | cpio ${CPIO_ARGS} --append -F "${CPIO}"
++    rm -rf "${TEMP}"/initramfs-kbdrate-temp > /dev/null
++}
++
+ append_e2fsprogs(){
+     if [ -d "${TEMP}"/initramfs-e2fsprogs-temp ]
+     then
+@@ -570,7 +587,19 @@ append_luks() {
+         copy_binaries "${TEMP}/initramfs-luks-temp/" /sbin/cryptsetup
+     fi
+ 
+-    log_future_cpio_content
++    # Copy binaries
++    # Include libgcc_s.so.1 to workaround cryptsetup needing libgcc_s.so.1
++    local libgccpath
++    if type gcc-config 2>&1 1>/dev/null; then
++        libgccpath="/usr/lib/gcc/$(s=$(gcc-config -c); echo ${s%-*}/${s##*-})/libgcc_s.so.1"
++    fi
++    if [[ ! -f ${libgccpath} ]]; then
++        libgccpath="/usr/lib/gcc/*/*/libgcc_s.so.1"
++    fi
++
++    copy_binaries "${TEMP}/initramfs-luks-temp" ${libgccpath}
++
++   log_future_cpio_content
+     find . -print | cpio ${CPIO_ARGS} --append -F "${CPIO}" \
+         || gen_die "appending cryptsetup to cpio"
+ 
+@@ -1024,6 +1053,7 @@ create_initramfs() {
+     append_data 'udev' "${UDEV}"
+     append_data 'auxilary' "${BUSYBOX}"
+     append_data 'busybox' "${BUSYBOX}"
++    append_data 'kbdrate'
+     isTrue "${CMD_E2FSPROGS}" && append_data 'e2fsprogs'
+     append_data 'lvm' "${LVM}"
+     append_data 'dmraid' "${DMRAID}"

@@ -1,0 +1,59 @@
+dev-libs/boost python
+sys-apps/busybox mdev syslog
+sys-libs/tdb python
+sys-libs/tevent python
+dev-util/cmake qt5
+dev-util/dcd dmd-2_080
+app-i18n/fcitx gtk2 gtk3 qt4
+sys-kernel/genkernel-next cryptsetup plymouth
+media-gfx/krita color-management vc
+app-portage/layman sync-plugin-portage git mercurial
+x11-libs/libdrm libkms
+net-libs/libtorrent-rasterbar python
+app-i18n/mozc fcitx4
+media-video/mpv bluray cplugins cuda jpeg libass libmpv lua opengl rubberband uchardet vulkan
+x11-misc/nitrogen xinerama
+media-gfx/photoqt pdf devil freeimage raw
+dev-lang/python sqlite
+dev-qt/qtscript scripttools
+dev-qt/designer declarative
+dev-qt/qt-creator autotools baremetal cmake git glsl lsp modeling qbs silversearcher valgrind -webengine
+dev-qt/qtmultimedia alsa pulseaudio qml gstreamer openal widgets
+net-fs/samba client winbind
+media-libs/libsdl2 haptic
+sys-apps/systemd cryptsetup elfutils gnuefi lzma policykit sysv-utils xkb -resolvconf
+# for ts3
+dev-qt/qtwebengine geolocation widgets jumbo-build
+sys-libs/zlib minizip
+dev-qt/qtwebchannel qml
+dev-qt/qtgui accessibility
+x11-misc/tint2  battery tint2conf
+sys-apps/util-linux static-libs caps
+dev-libs/libgpg-error static-libs
+dev-libs/lzo static-libs
+dev-libs/libgcrypt static-libs
+app-editors/vim python vim-pager
+app-editors/gvim python
+media-libs/vulkan-loader layers
+www-client/w3m imlib
+app-emulation/wine-vanilla -cups -gecko -mono -gstreamer openal vulkan
+x11-base/xorg-server xcsecurity
+dev-libs/botan threads
+# Idr what this is for
+>=dev-ruby/minitest-5.10.3 ruby_targets_ruby23
+>=dev-ruby/net-telnet-0.1.1-r1 ruby_targets_ruby23
+>=dev-ruby/power_assert-1.1.1 ruby_targets_ruby23
+>=dev-ruby/rake-12.3.1 ruby_targets_ruby23
+>=dev-ruby/test-unit-3.2.7 ruby_targets_ruby23
+>=dev-ruby/json-2.1.0 ruby_targets_ruby23
+>=dev-ruby/rdoc-5.1.0 ruby_targets_ruby23
+>=dev-ruby/kpeg-1.1.0-r1 ruby_targets_ruby23
+>=dev-ruby/racc-1.4.14 ruby_targets_ruby23
+>=virtual/rubygems-14 ruby_targets_ruby23
+>=dev-ruby/rubygems-2.7.9 ruby_targets_ruby23
+gnome-base/gvfs gnome-keyring nfs samba
+app-crypt/pinentry gnome-keyring
+media-video/mpv -encode samba zsh-completion v4l
+net-misc/openssh hpn ldns sctp
+media-fonts/noto cjk
+sys-firmware/intel-microcode hostonly initramfs
