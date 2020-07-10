@@ -1,0 +1,2 @@
+#!/bin/zsh
+man -k . | awk '{print $1}' | rofi -dmenu | xargs -ri termite -e "man {}"
