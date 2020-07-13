@@ -35,14 +35,15 @@ super + Scroll_Lock
 
 # Lock the screen
 super + l
-	/opt/i3lock-multimonitor/lock
+	physlock -l && /opt/i3lock-multimonitor/lock -a -n && physlock -L
+
+# Lock the screen and turn off the monitors
+super + ctrl + semicolon
+	sleep 1 && xset dpms force off && physlock -l && /opt/i3lock-multimonitor/lock -a -n && physlock -L
 
 # make sxhkd reload its configuration files:
 super + Escape
 	pkill -USR1 -x sxhkd
-
-super + ctrl + semicolon
-	sleep 1 && xset dpms force off && /opt/i3lock-multimonitor/lock
 
 #
 # bspwm hotkeys
