@@ -1,8 +1,10 @@
 filetype off
 
 " set the runtime path to include Vundle and initialize
-set rtp+=$HOME/.vim/bundle/Vundle.vim
-call vundle#begin('$HOME/.vim/bundle')
+let baseRuntimePath = split(&runtimepath, ',')[0]
+
+execute 'set rtp+=' . baseRuntimePath . '/bundle/Vundle.vim'
+call vundle#begin(baseRuntimePath . '/bundle/')
 Plugin 'VundleVim/Vundle.vim'
 " Plugin 'oblitum/YouCompleteMe'
 Plugin 'Valloric/YouCompleteMe'
@@ -29,15 +31,12 @@ call vundle#end()
 
 filetype plugin indent on
 
-let vimDir = '$HOME/.vim'
-let &runtimepath.=','.vimDir
-
-source $VIMRUNTIME/defaults.vim
+runtime defaults.vim
 
 set nobackup		" fuck backup files, undo files are enough
 if has('persistent_undo')
 	set undofile
-	let myUndoDir = expand(vimDir . '/undo')
+	let myUndoDir = expand(baseRuntimePath . '/undo')
 	call system('mkdir ' . myUndoDir)
 	let &undodir = myUndoDir
 endif
@@ -105,7 +104,7 @@ function! WindowNumber(...)
 	return 0
 endfunction
 
-if !empty(glob("$HOME/.vim/bundle/vim-airline"))
+if !empty(glob(expand(baseRuntimePath . "/bundle/vim-airline")))
 	call airline#add_statusline_func('WindowNumber')
 	call airline#add_inactive_statusline_func('WindowNumber')
 endif
@@ -114,23 +113,45 @@ endif
 map <F3> :noh<CR>
 
 " Cpp
-"let g:ycm_server_keep_logfiles = 0
-"let g:ycm_server_log_level = 'debug'
-"let g:ycm_confirm_extra_conf = 0
-"let g:ycm_use_clangd = 1
-"let g:ycm_clangd_args = ["-compile-commands-dir=" . getcwd() . "/build"]
-"map <F2> :YcmCompleter GoTo<CR>
+let g:ycm_server_keep_logfiles = 0
+let g:ycm_server_log_level = 'debug'
+let g:ycm_confirm_extra_conf = 0
 
-" CCLS
-inoremap <silent><expr> <c-space> coc#refresh()
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+if has("win32")
+	let g:ycm_use_clangd = 1
+	"let g:ycm_clangd_args = ["-compile-commands-dir=" . getcwd() . "/build"]
+	let g:ycm_clangd_uses_ycmd_caching = 0
+	let g:ycm_clangd_binary_path = 'D:\Programming\Utils\clangd_11.0.0-rc1\bin\clangd.exe'
+else
+	let g:ycm_use_clangd = 0
+	let g:ycm_language_server =
+		\ [{
+		\	'name': 'ccls',
+		\	'cmdline': ['ccls'],
+		\	'filetypes': ['c', 'cpp'],
+		\	'project_root_files':
+		\	[
+		\		'.ccls',
+		\		'compile_commands.json',
+		\		'.git/',
+		\		'.hg/',
+		\		'.ccls_root'
+		\	]
+		\ }]
+endif
 
-autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+map <F2> :YcmCompleter GoTo<CR>
 
-map <silent> <F2> :call CocLocations('ccls', 'textDocument/definition')<CR>
-nnoremap <silent> K :call CocActionAsync('doHover')<CR>
+" CCLS (coc)
+" inoremap <silent><expr> <c-space> coc#refresh()
+" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+
+" map <silent> <F2> :call CocLocations('ccls', 'textDocument/definition')<CR>
+" nnoremap <silent> K :call CocActionAsync('doHover')<CR>
 
 " cpp syntax hilight
 let g:cpp_class_scope_highlight = 1
@@ -152,7 +173,7 @@ let g:dutyl_dontHandleFormat = 1
 let g:dutyl_dontHandleIndent = 1
 
 " Snippets
-let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
+let g:UltiSnipsSnippetDirectories=[baseRuntimePath . '/UltiSnips']
 
 " let g:OmniSharp_server_stdio = 1
 " let g:OmniSharp_loglevel = 'debug'
