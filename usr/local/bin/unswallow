@@ -1,0 +1,15 @@
+#!/bin/zsh
+
+[ -s /tmp/swallowed ] || exit;
+
+line=$(cat /tmp/swallowed | rofi -dmenu);
+
+if [ -z "$line" ]; then
+	exit;
+fi;
+
+window=$(echo $line | cut -d "|" -f 3 | cut -c 2-);
+
+sed -i '/^'"$line"'$/d' /tmp/swallowed;
+
+bspc node "$window" --flag hidden=off;

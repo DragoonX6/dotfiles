@@ -1,0 +1,18 @@
+#!/bin/zsh
+
+# Get class of a wid
+get_class()
+{
+	id=$1
+	if [ -z "$id" ]; then
+		echo ""
+	else
+		xprop -id "$id" | sed -n '/WM_CLASS\|WM_COMMAND/s/.*"\(.*\)".*/\1/p'
+	fi
+}
+
+window=$(xwininfo | grep id: | cut -d ' ' -f 4)
+
+echo "$(get_class $window) | $(xwininfo -id "$window" | grep id: | cut -d '"' -f 2) | $window" >> /tmp/swallowed
+
+bspc node "$window" --flag hidden=on

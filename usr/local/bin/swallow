@@ -1,0 +1,7 @@
+#!/bin/zsh
+
+echo "$1 | terminal | $WINDOWID" >> /tmp/swallowed
+
+bspc node "$WINDOWID" --flag hidden=on
+
+$*;
