@@ -1,0 +1,7 @@
+# Logitech G502 Proteus Spectrum
+mouse:usb:v046dpc332:name:Logitech Gaming Mouse G502:
+# Logitech G502 HERO SE
+mouse:usb:v046dpc08b:name:Logitech G502 HERO SE:
+# Logitech G502 Hero
+mouse:usb:v046dpc08b:name:Logitech G502 HERO Gaming Mouse:
+ MOUSE_DPI=2400@500 *4500@500 5500@500 6400@500
