@@ -70,6 +70,13 @@ source $ZSH/oh-my-zsh.sh
 
 export PATH=$HOME/bin:$PATH
 export P4CONFIG=.p4config
+
+export DEVKITPRO=/opt/devkitpro
+export DEVKITARM=/opt/devkitpro/devkitARM
+export DEVKITPPC=/opt/devkitpro/devkitPPC
+
+export EDITOR=vim
+export SUDOEDITOR=vim
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
