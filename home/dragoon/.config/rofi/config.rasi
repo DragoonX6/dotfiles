@@ -1,0 +1,4 @@
+configuration {
+	modi: "window,run,ssh,windowcd,drun,combi,keys";
+	theme: "/usr/share/rofi/themes/glue_pro_blue.rasi";
+}
