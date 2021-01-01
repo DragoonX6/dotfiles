@@ -10,6 +10,8 @@ nitrogen --restore &
 
 tint2 &
 
+[ $(hostname) != judgement ] && qjackctl &
+
 pnmixer &
 [ $(hostname) = judgement ] && xfce4-power-manager &
 
