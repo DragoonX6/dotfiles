@@ -1,7 +1,1 @@
 sys-kernel/zen-sources
-# required by dev-perl/Net-SSLeay-1.850.0::gentoo[-libressl]
-# required by @__auto_slot_operator_replace_installed__ (argument)
-# /usr/portage/profiles/package.mask:
-# Lars Wendler <polynomial-c@gentoo.org> (28 Dec 2018)
-# Masked while being tested and reverse deps aren't fully compatible
-=dev-libs/openssl-1.1.1b-r2

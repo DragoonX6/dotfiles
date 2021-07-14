@@ -1,59 +1,75 @@
-dev-libs/boost python
+# Boot/Drivers
+sys-firmware/intel-microcode hostonly initramfs
 sys-apps/busybox mdev syslog
-sys-libs/tdb python
-sys-libs/tevent python
-dev-util/cmake qt5
-dev-util/dcd dmd-2_080
-app-i18n/fcitx gtk2 gtk3 qt4
 sys-kernel/genkernel-next cryptsetup plymouth
-media-gfx/krita color-management vc
-app-portage/layman sync-plugin-portage git mercurial
 x11-libs/libdrm libkms
-net-libs/libtorrent-rasterbar python
-app-i18n/mozc fcitx4
-media-video/mpv bluray cplugins cuda jpeg libass libmpv lua opengl rubberband uchardet vulkan
-x11-misc/nitrogen xinerama
-media-gfx/photoqt pdf devil freeimage raw
+sys-apps/systemd cryptsetup elfutils gnuefi lzma policykit sysv-utils xkb -resolvconf
+sys-apps/util-linux static-libs caps
+x11-base/xorg-server xcsecurity
+
+# Management
+app-portage/layman sync-plugin-portage git mercurial
+net-misc/openssh hpn ldns sctp
+
+# Programming
+app-editors/vim python vim-pager
+app-editors/gvim python
+dev-libs/boost python
 dev-lang/python sqlite
 dev-qt/qtscript scripttools
 dev-qt/designer declarative
-dev-qt/qt-creator autotools baremetal cmake git glsl lsp modeling qbs silversearcher valgrind -webengine
+dev-qt/qt-creator autotools baremetal cmake git glsl lsp modeling qbs silversearcher valgrind -webengine -clang
 dev-qt/qtmultimedia alsa pulseaudio qml gstreamer openal widgets
-net-fs/samba client winbind
-media-libs/libsdl2 haptic
-sys-apps/systemd cryptsetup elfutils gnuefi lzma policykit sysv-utils xkb -resolvconf
-# for ts3
-dev-qt/qtwebengine geolocation widgets jumbo-build
-sys-libs/zlib minizip
-dev-qt/qtwebchannel qml
 dev-qt/qtgui accessibility
+dev-util/cmake qt5
+dev-util/dcd dmd-2_080
+dev-vcs/mercurial -rust
+media-libs/vulkan-loader layers
+
+# Samba
+net-fs/samba client winbind
+sys-libs/tdb python
+sys-libs/tevent python
+
+# Desktop
+app-i18n/fcitx gtk2 gtk3 qt4
+app-i18n/mozc fcitx4
+x11-misc/nitrogen xinerama
+media-gfx/photoqt pdf devil freeimage raw
 x11-misc/tint2  battery tint2conf
-sys-apps/util-linux static-libs caps
+gnome-base/gvfs gnome-keyring nfs #samba
+media-fonts/noto cjk
+app-crypt/pinentry gnome-keyring
+dev-libs/libdbusmenu gtk3
+
+# For Firefox
+media-libs/freetype harfbuzz
+
+# Drawing
+media-gfx/krita color-management vc
+
+# Deluge
+net-libs/libtorrent-rasterbar python
+
+# Multimedia
+media-video/mpv -encode bluray cplugins cuda jpeg libass libmpv lua opengl rubberband uchardet vulkan samba zsh-completion v4l
+
+# Neofetch
+www-client/w3m imlib
+
+# Emulation
+app-emulation/wine-vanilla -cups -gecko -mono -gstreamer openal vulkan
+
+# Other
+media-libs/libsdl2 haptic
+sys-libs/zlib minizip
 dev-libs/libgpg-error static-libs
 dev-libs/lzo static-libs
 dev-libs/libgcrypt static-libs
-app-editors/vim python vim-pager
-app-editors/gvim python
-media-libs/vulkan-loader layers
-www-client/w3m imlib
-app-emulation/wine-vanilla -cups -gecko -mono -gstreamer openal vulkan
-x11-base/xorg-server xcsecurity
-dev-libs/botan threads
-# Idr what this is for
->=dev-ruby/minitest-5.10.3 ruby_targets_ruby23
->=dev-ruby/net-telnet-0.1.1-r1 ruby_targets_ruby23
->=dev-ruby/power_assert-1.1.1 ruby_targets_ruby23
->=dev-ruby/rake-12.3.1 ruby_targets_ruby23
->=dev-ruby/test-unit-3.2.7 ruby_targets_ruby23
->=dev-ruby/json-2.1.0 ruby_targets_ruby23
->=dev-ruby/rdoc-5.1.0 ruby_targets_ruby23
->=dev-ruby/kpeg-1.1.0-r1 ruby_targets_ruby23
->=dev-ruby/racc-1.4.14 ruby_targets_ruby23
->=virtual/rubygems-14 ruby_targets_ruby23
->=dev-ruby/rubygems-2.7.9 ruby_targets_ruby23
-gnome-base/gvfs gnome-keyring nfs samba
-app-crypt/pinentry gnome-keyring
-media-video/mpv -encode samba zsh-completion v4l
-net-misc/openssh hpn ldns sctp
-media-fonts/noto cjk
-sys-firmware/intel-microcode hostonly initramfs
+
+# Chromium
+#www-client/ungoogled-chromium -l10n_am -l10n_ar -l10n_bg -l10n_bn -l10n_ca -l10n_cs -l10n_da -l10n_de -l10n_el -l10n_en-GB -l10n_es -l10n_es-419 -l10n_et -l10n_fa -l10n_fi -l10n_fil -l10n_fr -l10n_gu -l10n_he -l10n_hi -l10n_hr -l10n_hu -l10n_id -l10n_it -l10n_ja -l10n_kn -l10n_ko -l10n_lt -l10n_lv -l10n_ml -l10n_mr -l10n_ms -l10n_nb -l10n_nl -l10n_pl -l10n_pt-BR -l10n_pt-PT -l10n_ro -l10n_ru -l10n_sk -l10n_sl -l10n_sr -l10n_sv -l10n_sw -l10n_ta -l10n_te -l10n_th -l10n_tr -l10n_uk -l10n_vi -l10n_zh-CN -l10n_zh-TW -cups -system-ffmpeg -system-harfbuzz -system-icu -system-jsoncpp -system-libevent -system-openh264 -system-openjpeg -system-libvpx cfi clang suid tcmalloc thinlto optimize-thinlto optimize-webui
+#net-libs/nodejs inspector
+
+www-client/ungoogled-chromium-bin -l10n_am -l10n_ar -l10n_bg -l10n_bn -l10n_ca -l10n_cs -l10n_da -l10n_de -l10n_el -l10n_en-GB -l10n_es -l10n_es-419 -l10n_et -l10n_fa -l10n_fi -l10n_fil -l10n_fr -l10n_gu -l10n_he -l10n_hi -l10n_hr -l10n_hu -l10n_id -l10n_it -l10n_ja -l10n_kn -l10n_ko -l10n_lt -l10n_lv -l10n_ml -l10n_mr -l10n_ms -l10n_nb -l10n_nl -l10n_pl -l10n_pt-BR -l10n_pt-PT -l10n_ro -l10n_ru -l10n_sk -l10n_sl -l10n_sr -l10n_sv -l10n_sw -l10n_ta -l10n_te -l10n_th -l10n_tr -l10n_uk -l10n_vi -l10n_zh-CN -l10n_zh-TW -generic haswell
+media-libs/libvpx postproc
