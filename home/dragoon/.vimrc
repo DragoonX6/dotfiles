@@ -4,36 +4,40 @@ filetype off
 let baseRuntimePath = split(&runtimepath, ',')[0]
 
 execute 'set rtp+=' . baseRuntimePath . '/bundle/Vundle.vim'
-call vundle#begin(baseRuntimePath . '/bundle/')
-Plugin 'VundleVim/Vundle.vim'
-" Plugin 'oblitum/YouCompleteMe'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'scrooloose/nerdtree'
-Plugin 'majutsushi/tagbar'
-Plugin 'godlygeek/tabular'
-Plugin 'jlanzarotta/bufexplorer'
-Plugin 'kien/ctrlp.vim'
-Plugin 'flazz/vim-colorschemes'
-Plugin 'octol/vim-cpp-enhanced-highlight'
-Plugin 'rking/ag.vim'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tikhomirov/vim-glsl'
-Plugin 'SirVer/ultisnips'
-Plugin 'romainl/vim-qf'
-Plugin 'Konfekt/vim-alias'
-" Plugin 'neoclide/coc.nvim'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'idanarye/vim-dutyl'
-" Plugin 'OmniSharp/omnisharp-vim'
-call vundle#end()
+
+if isdirectory(expand(baseRuntimePath . '/bundle/Vundle.vim'))
+	call vundle#begin(baseRuntimePath . '/bundle/')
+	Plugin 'VundleVim/Vundle.vim'
+	" Plugin 'oblitum/YouCompleteMe'
+	Plugin 'Valloric/YouCompleteMe'
+	Plugin 'scrooloose/nerdtree'
+	Plugin 'majutsushi/tagbar'
+	Plugin 'godlygeek/tabular'
+	Plugin 'jlanzarotta/bufexplorer'
+	Plugin 'kien/ctrlp.vim'
+	Plugin 'flazz/vim-colorschemes'
+	Plugin 'octol/vim-cpp-enhanced-highlight'
+	Plugin 'rking/ag.vim'
+	Plugin 'vim-airline/vim-airline'
+	Plugin 'vim-airline/vim-airline-themes'
+	Plugin 'tpope/vim-fugitive'
+	Plugin 'tikhomirov/vim-glsl'
+	Plugin 'SirVer/ultisnips'
+	Plugin 'romainl/vim-qf'
+	" Plugin 'neoclide/coc.nvim'
+	Plugin 'terryma/vim-multiple-cursors'
+	Plugin 'idanarye/vim-dutyl'
+	" Plugin 'OmniSharp/omnisharp-vim'
+	call vundle#end()
+endif
 
 filetype plugin indent on
 
 runtime defaults.vim
 
-set term=xterm-256color
+if !has("win32")
+	set term=xterm-256color
+endif
 
 set nobackup		" fuck backup files, undo files are enough
 if has('persistent_undo')
@@ -112,7 +116,19 @@ if !empty(glob(expand(baseRuntimePath . "/bundle/vim-airline")))
 endif
 " End GUI stuffs
 
+" Generic keybinds
 map <F3> :noh<CR>
+
+" >not an editor command
+cnoreabbrev W! w!
+cnoreabbrev Q! q!
+cnoreabbrev Qa! qa!
+cnoreabbrev Wqa wqa
+cnoreabbrev Wq wq
+cnoreabbrev Wa wa
+cnoreabbrev W w
+cnoreabbrev Q q
+cnoreabbrev Qa qa
 
 " Cpp
 let g:ycm_server_keep_logfiles = 0
@@ -123,7 +139,7 @@ if has("win32")
 	let g:ycm_use_clangd = 1
 	"let g:ycm_clangd_args = ["-compile-commands-dir=" . getcwd() . "/build"]
 	let g:ycm_clangd_uses_ycmd_caching = 0
-	let g:ycm_clangd_binary_path = 'D:\Programming\Utils\clangd_11.0.0-rc1\bin\clangd.exe'
+	" let g:ycm_clangd_binary_path = 'D:\Programming\Utils\clangd_11.0.0-rc1\bin\clangd.exe'
 else
 	let g:ycm_use_clangd = 0
 	let g:ycm_language_server =
@@ -144,7 +160,7 @@ endif
 
 map <F2> :YcmCompleter GoTo<CR>
 
-" CCLS (coc)
+" CCLS
 " inoremap <silent><expr> <c-space> coc#refresh()
 " inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 " inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
