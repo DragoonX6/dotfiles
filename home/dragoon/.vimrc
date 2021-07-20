@@ -33,6 +33,8 @@ filetype plugin indent on
 
 runtime defaults.vim
 
+set term=xterm-256color
+
 set nobackup		" fuck backup files, undo files are enough
 if has('persistent_undo')
 	set undofile
