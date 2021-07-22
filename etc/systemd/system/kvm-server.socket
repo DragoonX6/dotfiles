@@ -1,0 +1,8 @@
+[Unit]
+Description=KVM Server socket
+
+[Socket]
+ListenStream=/var/run/kvm-server.sock
+
+[Install]
+WantedBy=default.target

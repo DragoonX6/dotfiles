@@ -1,0 +1,129 @@
+#!/usr/bin/env python3
+
+# vim: noexpandtab
+
+import sys
+import os
+import socketserver
+import subprocess
+import socket
+import json
+import libvirt
+from syslog import syslog
+
+conn = None
+
+def change_usb_state(vm, action, device):
+	xml_path = '/tmp/device-{}.xml'.format(device)
+	if not os.path.exists(xml_path):
+		with open(xml_path, 'w+') as fp:
+			fp.write("""
+				<hostdev mode='subsystem' type='usb'>
+					<source>
+						<vendor id='0x{}'/>
+						<product id='0x{}'/>
+					</source>
+				</hostdev>
+			""".format(*device.split(':')))
+		#endwith
+	#endif
+
+	return subprocess.call(['virsh', action+'-device', vm, xml_path]) == 0
+#enddef
+
+class PCIHandler(socketserver.StreamRequestHandler):
+	def handle(self):
+		for line in self.rfile:
+			action_str = line.strip().decode("utf-8")
+			print(action_str.split(' '), file=sys.stderr)
+			vm_name, action = action_str.split(' ')
+
+			config_path = '/etc/kvm-server/{}.json'.format(vm_name)
+			if not os.path.exists(config_path):
+				syslog("[KVM Server] config file not found.")
+				continue
+			#endif
+
+			config = None
+			with open(config_path, encoding="utf-8") as config_file:
+				config = json.loads(config_file.read())
+			#endwith
+
+			if action == "host" or action == "guest":
+				global conn
+				dom = None
+
+				if "alt_names" in config:
+					got_active = False
+					for name in [vm_name] + config["alt_names"]:
+						dom = conn.lookupByName(name)
+						if dom == None:
+							syslog("[KVM Server] failed to find the VM \"{}\"".format(name))
+							continue
+						#endif
+
+						if dom.isActive():
+							got_active = True
+							vm_name = name
+							break
+						#endif
+					#endfor
+
+					if not got_active:
+						syslog("[KVM Server] Failed to find any running VMs")
+						continue
+					#endif
+				else:
+					dom = conn.lookupByName(vm_name)
+					if dom == None:
+						syslog("[KVM Server] failed to find the VM \"{}\"".format(vm_name))
+						continue
+					#endif
+
+					if not dom.isActive():
+						syslog("[KVM Server] VM \"{}\" is not running".format(vm_name))
+					#endif
+				#endif
+
+				for device in config["devices"]:
+					usb_action = "attach" if action == "guest" else "detach"
+
+					if not change_usb_state(vm_name, usb_action, device):
+						syslog("[KVM Server] VM \"{}\": failed to {} device {} {} {}".format(vm_name, usb_action, device, "to" if action == "guest" else "from", action))
+					#endif
+				#endfor
+
+				for id, display in config[action + "_displays"]:
+					subprocess.call(['ddcutil', '-d', id, 'setvcp', '60', display])
+				#endfor
+			else:
+				syslog("[KVM Server] invalid action: {}".format(action_str))
+			#endif
+		#endfor
+	#enddef
+#endclass
+
+class TCPServerPassive(socketserver.TCPServer):
+	def __init__(self, RequestHandlerClass):
+		super().__init__(None, RequestHandlerClass, bind_and_activate=False)
+		self.socket.close()
+		self.socket = socket.fromfd(3, socket.AF_INET, socket.SOCK_STREAM)
+	#enddef
+#endclass
+
+class ThreadedTCPServer(socketserver.ThreadingMixIn, TCPServerPassive):
+	pass
+#endclass
+
+conn = libvirt.openReadOnly('qemu:///system')
+if conn == None:
+	syslog("[KVM Server] failed to connect to libvirt")
+	exit(1)
+#endif
+
+try:
+	ThreadedTCPServer(PCIHandler).serve_forever()
+except OSError:
+	syslog("[KVM Server] failed to start because it should be started by systemd")
+	exit(1)
+#endtry

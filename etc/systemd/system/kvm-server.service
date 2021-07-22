@@ -1,0 +1,8 @@
+[Unit]
+Description=KVM Server
+
+[Service]
+ExecStart=/usr/local/bin/kvm-server
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [ $2 == started ]; then
+	echo $1 guest | socat - UNIX-CONNECT:/run/kvm-server.sock;
+elif [ $2 == stopped ]; then
+	echo $1 host | socat - UNIX-CONNECT:/run/kvm-server.sock;
+fi;
