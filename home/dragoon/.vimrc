@@ -130,6 +130,14 @@ cnoreabbrev W w
 cnoreabbrev Q q
 cnoreabbrev Qa qa
 
+" Win32 tool paths
+if has("win32")
+	" Git
+	let g:fugitive_git_executable = 'C:\PROGRA~1\Git\bin\git.exe'
+	let g:ag_prg = 'D:\Programming\Utils\ag.exe --vimgrep'
+	let g:tagbar_ctags_bin = 'D:\Programming\msys64\mingw64\bin\ctags.exe'
+endif
+
 " Cpp
 let g:ycm_server_keep_logfiles = 0
 let g:ycm_server_log_level = 'debug'
