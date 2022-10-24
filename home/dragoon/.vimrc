@@ -150,8 +150,13 @@ if has("win32")
 	" let g:ycm_clangd_binary_path = 'D:\Programming\Utils\clangd_11.0.0-rc1\bin\clangd.exe'
 else
 	let g:ycm_use_clangd = 0
+
+	" Use dotnet omnisharp instead
+	let g:ycm_roslyn_binary_path= expand(baseRuntimePath . '/../Projects/C#/omnisharp-roslyn/bin/Release/OmniSharp.Http.Driver/net6.0/OmniSharp')
+
 	let g:ycm_language_server =
-		\ [{
+		\ [
+		\ {
 		\	'name': 'ccls',
 		\	'cmdline': ['ccls'],
 		\	'filetypes': ['c', 'cpp'],
@@ -163,7 +168,8 @@ else
 		\		'.hg/',
 		\		'.ccls_root'
 		\	]
-		\ }]
+		\ }
+		\]
 endif
 
 map <F2> :YcmCompleter GoTo<CR>
