@@ -45,6 +45,10 @@ super + ctrl + semicolon
 super + Escape
 	pkill -USR1 -x sxhkd
 
+# Switch to Windows
+ctrl + shift + F12
+	echo win10 guest | socat - UNIX-CONNECT:/run/kvm-server.sock
+
 #
 # bspwm hotkeys
 #
