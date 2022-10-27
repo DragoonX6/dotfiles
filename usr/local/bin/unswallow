@@ -10,6 +10,8 @@ fi;
 
 window=$(echo $line | cut -d "|" -f 3 | cut -c 2-);
 
-sed -i '/^'"$line"'$/d' /tmp/swallowed;
+escaped_line=$(printf '%s\n' "$line" | sed -e 's/[]\/$*.^[]/\\&/g')
+
+sed -i '/^'"$escaped_line"'$/d' /tmp/swallowed;
 
 bspc node "$window" --flag hidden=off;
