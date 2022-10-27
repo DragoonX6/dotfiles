@@ -1,14 +1,35 @@
 #!/bin/sh
 
-set -ex;
+# REQUIREMENTS:
+# Packages: softethervpn client, dhcpcd, iproute2, jq, sudo, systemd
+# Services: softethervpn client, systemd-resolved
 
-HOST=`vpncmd localhost -client -cmd AccountList | grep -A 2 "$1" | grep Hostname | cut -d \| -f 2 | cut -d : -f 1`;
-DEVICE=vpn_`vpncmd localhost -client -cmd AccountList | grep -A 4 "$1" | grep Network | cut -d \| -f 2 | tr '[[:upper:]]' '[[:lower:]]'`;
-HOST_DEVICE=`ip link | grep "state UP" | grep enp | awk -F ': ' '{ print $2 }'`;
-GATEWAY=`ip route | grep $HOST_DEVICE | head -1 | cut -d ' ' -f 3`;
-IPV4=`getent hosts $HOST | cut -d ' ' -f 2 | xargs getent ahostsv4 | cut -d ' ' -f 1 | tail -1`;
+set -e;
 
-sudo dhcpcd -k $DEVICE;
+if [ -z $1 ]; then
+	echo "Account/Connection name needed";
+	exit 1;
+fi;
+
+HOST=$(vpncmd localhost -client -cmd AccountList | grep -A 2 "$1" | grep Hostname | cut -d \| -f 2 | cut -d : -f 1);
+DEVICE=vpn_$(vpncmd localhost -client -cmd AccountList | grep -A 4 "$1" | grep Network | cut -d \| -f 2 | tr '[[:upper:]]' '[[:lower:]]');
+HOST_DEVICE=$(ip -j link | jq -r '.[] | select(.operstate == "UP") | select(has("master") | not) | .ifname');
+GATEWAY=$(ip -j route | jq -r '.[] | select(.dev == "'$HOST_DEVICE'" and .dst == "default").gateway');
+
+# No clue why this is so complicated
+#IPV4=$(getent hosts $HOST | cut -d ' ' -f 2 | xargs getent ahostsv4 | cut -d ' ' -f 1 | tail -1);
+IPV4=$(getent ahostsv4 $HOST | head -1 | cut -d ' ' -f 1);
+
+sudo resolvectl revert $DEVICE;
 sudo ip route del $IPV4 via $GATEWAY dev $HOST_DEVICE;
+sudo dhcpcd -k $DEVICE;
 
 vpncmd localhost -CLIENT -CMD AccountDisconnect "$1";
+
+WANT_IPV6=$(sysctl net/ipv6/conf/$HOST_DEVICE/disable_ipv6 | cut -d ' ' -f 3);
+echo $WANT_IPV6;
+
+if [ $WANT_IPV6 -eq 0 ]; then
+	echo "Re-enabling IPV6";
+	sudo sysctl -w net/ipv6/conf/$DEVICE/disable_ipv6=0;
+fi;

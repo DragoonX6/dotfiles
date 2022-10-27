@@ -1,0 +1,52 @@
+#!/bin/sh
+
+# REQUIREMENTS:
+# Packages: softethervpn client, dhcpcd, iproute2, jq, sudo, resolvconf, systemd
+# Services: softethervpn client, systemd-resolved
+# Config: Set resolvconf to write to /etc/resolv.dhcpcd.conf
+# Set systemd-resolved to use a stub config (/etc/resolv.conf)
+
+set -e;
+
+if [ -z $1 ]; then
+	echo "Account/Connection name needed";
+	exit 1;
+fi;
+
+HOST=$(vpncmd localhost -client -cmd AccountList | grep -A 2 "$1" | grep Hostname | cut -d \| -f 2 | cut -d : -f 1);
+DEVICE=vpn_$(vpncmd localhost -client -cmd AccountList | grep -A 4 "$1" | grep Network | cut -d \| -f 2 | tr '[[:upper:]]' '[[:lower:]]');
+HOST_DEVICE=$(ip -j link | jq -r '.[] | select(.operstate == "UP") | select(has("master") | not) | .ifname');
+GATEWAY=$(ip -j route | jq -r '.[] | select(.dev == "'$HOST_DEVICE'" and .dst == "default").gateway');
+
+# No clue why this is so complicated
+#IPV4=$(getent hosts $HOST | cut -d ' ' -f 2 | xargs getent ahostsv4 | cut -d ' ' -f 1 | tail -1);
+IPV4=$(getent ahostsv4 $HOST | head -1 | cut -d ' ' -f 1);
+
+DEFAULT_METRIC=$(ip -j route | jq -r '.[] | select(.dev == "'$HOST_DEVICE'" and .dst == "default").metric');
+NEXT_METRIC=$(($DEFAULT_METRIC + 1));
+
+vpncmd localhost -CLIENT -CMD AccountConnect "$1";
+
+set +e;
+ip -j address | jq --exit-status '.[] | select(.ifname == "'$HOST_DEVICE'") | .addr_info[] | select(.family == "inet6" and .scope == "global")';
+WANT_IPV6=$?;
+set -e;
+
+IPV6_WAIT="--waitip=6"
+
+if [ $WANT_IPV6 -ne 0 ]; then
+	echo "Disabling IPV6";
+	sudo sysctl -w net/ipv6/conf/$DEVICE/disable_ipv6=1;
+
+	IPV6_WAIT=
+fi;
+
+sudo dhcpcd --metric $NEXT_METRIC --waitip=4 $IPV6_WAIT -n $DEVICE;
+
+sudo ip route add $IPV4 via $GATEWAY dev $HOST_DEVICE;
+
+DNS_SERVERS=$(cat /etc/resolv.dhcpcd.conf | grep nameserver | cut -d ' ' -f 2 | xargs echo);
+
+sudo resolvectl dns $DEVICE $DNS_SERVERS;
+sudo resolvectl mdns $DEVICE 1;
+sudo resolvectl dnsovertls $DEVICE 0;
