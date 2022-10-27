@@ -10,10 +10,10 @@ nitrogen --restore &
 
 tint2 &
 
-[ $(hostname) != judgement ] && qjackctl &
+[ $(uname -n) != judgement ] && qjackctl &
 
 pnmixer &
-[ $(hostname) = judgement ] && xfce4-power-manager &
+[ $(uname -n) = judgement ] && xfce4-power-manager &
 
 thunar --deamon &
 
@@ -28,7 +28,9 @@ fcitx-autostart &
 
 parcellite &
 
-if [ $(hostname) = judgement ]
+bspswallow &
+
+if [ $(uname -n) = judgement ]
 then
 	bspc wm -O DP-0 HDMI-0
 	bspc monitor DP-0 -d I II III IV V VI VII VIII IX X
