@@ -21,5 +21,11 @@
 	st = status
 	lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
 	lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+	slog = log --pretty=format:'%C(cyan)%h%Creset -%C(green)%d%Creset %s %Cgreen(%cr) %C(bold red)<%an>%Creset' --abbrev-commit
+	llb = !git branch -vv | grep -v origin | cut -d* -f2-
+	lgb = !git branch -vv | grep gone | awk '{print $1}'
+	flc = !OLD_BRANCH=$(git name-rev --name-only HEAD) sh -c \"git llb | awk '{print \\$1}' | xargs -I {} sh -c \\\"git checkout {} && git cherry origin\\\" && git checkout \\$OLD_BRANCH\"
 [pull]
 	rebase = yes
+[color]
+	ui = auto
