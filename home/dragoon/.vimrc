@@ -8,7 +8,6 @@ execute 'set rtp+=' . baseRuntimePath . '/bundle/Vundle.vim'
 if isdirectory(expand(baseRuntimePath . '/bundle/Vundle.vim'))
 	call vundle#begin(baseRuntimePath . '/bundle/')
 	Plugin 'VundleVim/Vundle.vim'
-	" Plugin 'oblitum/YouCompleteMe'
 	Plugin 'Valloric/YouCompleteMe'
 	Plugin 'scrooloose/nerdtree'
 	Plugin 'majutsushi/tagbar'
@@ -24,10 +23,8 @@ if isdirectory(expand(baseRuntimePath . '/bundle/Vundle.vim'))
 	Plugin 'tikhomirov/vim-glsl'
 	Plugin 'SirVer/ultisnips'
 	Plugin 'romainl/vim-qf'
-	" Plugin 'neoclide/coc.nvim'
 	Plugin 'terryma/vim-multiple-cursors'
 	Plugin 'idanarye/vim-dutyl'
-	" Plugin 'OmniSharp/omnisharp-vim'
 	call vundle#end()
 endif
 
@@ -39,7 +36,8 @@ if !has("win32")
 	set term=xterm-256color
 endif
 
-set nobackup		" fuck backup files, undo files are enough
+" fuck backup files, undo files are enough
+set nobackup
 if has('persistent_undo')
 	set undofile
 	let myUndoDir = expand(baseRuntimePath . '/undo')
@@ -100,8 +98,6 @@ let g:airline_extensions = ['tabline', 'ycm']
 let g:airline#extensions#ycm#enabled = 1
 let g:airline#extensions#ycm#error_symbol = 'E:'
 let g:airline#extensions#ycm#warning_symbol = 'W:'
-" let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
-" let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
 
 function! WindowNumber(...)
 	let builder = a:1
@@ -145,45 +141,13 @@ let g:ycm_confirm_extra_conf = 0
 
 if has("win32")
 	let g:ycm_use_clangd = 1
-	"let g:ycm_clangd_args = ["-compile-commands-dir=" . getcwd() . "/build"]
 	let g:ycm_clangd_uses_ycmd_caching = 0
-	" let g:ycm_clangd_binary_path = 'D:\Programming\Utils\clangd_11.0.0-rc1\bin\clangd.exe'
 else
-	let g:ycm_use_clangd = 0
-
 	" Use dotnet omnisharp instead
 	let g:ycm_roslyn_binary_path= expand(baseRuntimePath . '/../Projects/C#/omnisharp-roslyn/bin/Release/OmniSharp.Http.Driver/net6.0/OmniSharp')
-
-	let g:ycm_language_server =
-		\ [
-		\ {
-		\	'name': 'ccls',
-		\	'cmdline': ['ccls'],
-		\	'filetypes': ['c', 'cpp'],
-		\	'project_root_files':
-		\	[
-		\		'.ccls',
-		\		'compile_commands.json',
-		\		'.git/',
-		\		'.hg/',
-		\		'.ccls_root'
-		\	]
-		\ }
-		\]
 endif
 
 map <F2> :YcmCompleter GoTo<CR>
-
-" CCLS
-" inoremap <silent><expr> <c-space> coc#refresh()
-" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
-" autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
-
-" map <silent> <F2> :call CocLocations('ccls', 'textDocument/definition')<CR>
-" nnoremap <silent> K :call CocActionAsync('doHover')<CR>
 
 " cpp syntax hilight
 let g:cpp_class_scope_highlight = 1
@@ -193,7 +157,6 @@ let g:cpp_experimental_template_highlight = 1
 set cinoptions=N-s,i-s,=0,b1,(0,W4,g0,t0,p0,j1
 
 set tabstop=4 shiftwidth=4 noexpandtab
-"set makeprg ="python3 ./waf build"
 
 map <F4> :e %:p:s,.hpp$,.X123X,:s,.cpp$,.hpp,:s,.X123X$,.cpp,<CR>
 map <F5> :e %:p:s,_impl.hpp$,.X123X,:s,.hpp$,_impl.hpp,:s,.X123X$,.hpp,<CR>
@@ -206,6 +169,3 @@ let g:dutyl_dontHandleIndent = 1
 
 " Snippets
 let g:UltiSnipsSnippetDirectories=[baseRuntimePath . '/UltiSnips']
-
-" let g:OmniSharp_server_stdio = 1
-" let g:OmniSharp_loglevel = 'debug'

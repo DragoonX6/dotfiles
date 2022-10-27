@@ -38,11 +38,8 @@ function! s:Locate_constructor_name(line_num)
 	normal ^
 	let a = search(')\_s*\%(noexcept\)\=\_s*:', 'Wbcen')
 	if a != a:line_num
-		"echom 'Line: ' . prevnonblank(cline_num - 1) . ' is not a constructor, a = ' . a
-		"echom 'Cursor pos: [' . join(getcurpos(), ', ') . ']'
 		return 0
 	endif
-	"echom 'probably a constructor'
 	call search(')\_s*\%(noexcept\)\=\_s*:', 'Wbc')
 	normal [(
 	let a = search('\i\+\_s*(', 'Wbcen')
@@ -72,8 +69,6 @@ function! s:Abb_cpp_indent_impl(line_num)
 		" Return indent of previous line. But don't use cindent directly as the
 		" previous line might be one of our special cases (e.g. namespace).
 		let retv = s:Abb_cpp_indent_impl(pline_num)
-	"elseif pline =~# '^\s*namespace.*'
-	"	let retv = 0
 	elseif cline =~ '^\s*:'
 		" Except certain cases with the conditional assignment operator (i.e. ? :)
 		" a ':' on a new line indicates the first item in an initializer list. It
@@ -115,9 +110,7 @@ function! s:Abb_cpp_indent_impl(line_num)
 		let retv = cindent(prevnonblank(pline_num - 1))
 	" Every macro ending without a ; should be placed before this match
 	elseif pline =~ '^#\@!.*\%([{}():;,="|]\)\@<!\%(else\)\@<!$'
-		"echom 'a'
 		if cline =~ '[)}]\@<!;$'
-			"echom 'b'
 			let retv = cindent(pline_num)
 		else
 			let retv = cindent(cline_num)
