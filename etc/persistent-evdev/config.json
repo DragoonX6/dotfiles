@@ -1,0 +1,8 @@
+{
+    "cache": "/var/cache/persistent-evdev",
+    "devices": {
+        "persist-mouse0": "/dev/input/by-id/usb-Logitech_Gaming_Mouse_G502_176D376A3933-event-mouse",
+        "persist-keyboard0": "/dev/input/by-id/usb-04d9_USB-HID_Keyboard-event-kbd",
+        "persist-keyboard1": "/dev/input/by-id/usb-04d9_USB-HID_Keyboard-event-if02"
+    }
+}

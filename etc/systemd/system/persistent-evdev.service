@@ -1,0 +1,8 @@
+[Unit]
+Description=Persistent evdev proxy
+
+[Service]
+ExecStart=/usr/local/bin/persistent-evdev.py /etc/persistent-evdev/config.json
+
+[Install]
+WantedBy=multi-user.target
