@@ -1,2 +1,2 @@
 #!/bin/zsh
-man -k . | awk '{print $1}' | rofi -dmenu | xargs -ri termite -e "man {}"
+man -k . | cut -d ' ' -f 1 | rofi -dmenu | xargs -ri alacritty -e man "{}"
