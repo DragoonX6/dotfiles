@@ -1,5 +1,5 @@
 {
-	"alt_names": ["win10-genshin", "win10-genshin-hugepages", "win10-hugepages"],
+	"alt_names": ["win10-hugepages"],
 	"devices":["045e:028e"],
 	"host_displays": [["1", "5"], ["2", "5"]],
 	"guest_displays": [["1", "9"], ["2", "9"]]
