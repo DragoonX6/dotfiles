@@ -1,0 +1,10 @@
+[Unit]
+Description=Set the secure attention key to Ctrl+Alt+Pause
+After=getty.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/sh -c 'echo "control alt keycode 119 = SAK" | /usr/bin/loadkeys'
+
+[Install]
+WantedBy=getty.target
