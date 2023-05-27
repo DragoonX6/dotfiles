@@ -79,6 +79,9 @@ export EDITOR=vim
 export SUDO_EDITOR=vim
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
+
+export LIBVIRT_DEFAULT_URI="qemu:///system"
+
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
