@@ -142,9 +142,12 @@ let g:ycm_confirm_extra_conf = 0
 if has("win32")
 	let g:ycm_use_clangd = 1
 	let g:ycm_clangd_uses_ycmd_caching = 0
+
+	" Use dotnet omnisharp instead
+	let g:ycm_roslyn_binary_path= 'D:\Programming\msys64\home\Dragoon\omnisharp-roslyn\bin\Release\OmniSharp.Http.Driver\net6.0\OmniSharp.exe'
 else
 	" Use dotnet omnisharp instead
-	let g:ycm_roslyn_binary_path= expand(baseRuntimePath . '/../Projects/C#/omnisharp-roslyn/bin/Release/OmniSharp.Http.Driver/net6.0/OmniSharp')
+	" let g:ycm_roslyn_binary_path= expand(baseRuntimePath . '/../Projects/C#/omnisharp-roslyn/bin/Release/OmniSharp.Http.Driver/net6.0/OmniSharp')
 endif
 
 map <F2> :YcmCompleter GoTo<CR>
