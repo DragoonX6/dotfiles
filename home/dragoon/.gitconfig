@@ -29,3 +29,5 @@
 	rebase = yes
 [color]
 	ui = auto
+[init]
+	defaultBranch = master
