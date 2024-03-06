@@ -1,4 +1,4 @@
-<domain type='kvm' xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'>
+<domain type='kvm'>
   <name>win10</name>
   <uuid>92d1efb1-b56d-445d-a38b-658dfb09c5c8</uuid>
   <metadata>
@@ -59,7 +59,7 @@
         <direct state='on'/>
       </stimer>
       <reset state='on'/>
-      <vendor_id state='on' value='Amazon'/>
+      <vendor_id state='on' value='Microsoft Hv'/>
       <frequencies state='on'/>
       <reenlightenment state='on'/>
       <tlbflush state='on'/>
@@ -71,7 +71,7 @@
     <ioapic driver='kvm'/>
   </features>
   <cpu mode='host-passthrough' check='none' migratable='off'>
-    <topology sockets='1' dies='1' cores='4' threads='2'/>
+    <topology sockets='1' dies='1' clusters='1' cores='4' threads='2'/>
     <cache mode='passthrough'/>
     <feature policy='require' name='invtsc'/>
     <feature policy='require' name='vmx'/>
@@ -188,10 +188,19 @@
     <input type='mouse' bus='ps2'/>
     <input type='keyboard' bus='ps2'/>
     <input type='mouse' bus='virtio'>
-      <address type='pci' domain='0x0000' bus='0x09' slot='0x00' function='0x0'/>
+      <address type='pci' domain='0x0000' bus='0x06' slot='0x00' function='0x0'/>
     </input>
     <input type='keyboard' bus='virtio'>
-      <address type='pci' domain='0x0000' bus='0x06' slot='0x00' function='0x0'/>
+      <address type='pci' domain='0x0000' bus='0x09' slot='0x00' function='0x0'/>
+    </input>
+    <input type='evdev'>
+      <source dev='/dev/input/by-id/uinput-persist-mouse0'/>
+    </input>
+    <input type='evdev'>
+      <source dev='/dev/input/by-id/uinput-persist-keyboard0' grab='all' grabToggle='ctrl-ctrl' repeat='on'/>
+    </input>
+    <input type='evdev'>
+      <source dev='/dev/input/by-id/uinput-persist-keyboard1' grab='all' grabToggle='ctrl-ctrl' repeat='on'/>
     </input>
     <tpm model='tpm-crb'>
       <backend type='emulator' version='2.0'/>
@@ -201,7 +210,10 @@
       <audio id='1'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x1b' function='0x0'/>
     </sound>
-    <audio id='1' type='pulseaudio' serverName='/run/user/1000/pulse/native'/>
+    <audio id='1' type='pipewire' runtimeDir='/srv/win10'>
+      <input name='@DEFAULT_SINK@' streamName='win10-in'/>
+      <output name='@DEFAULT_SOURCE@' streamName='win10-out'/>
+    </audio>
     <video>
       <model type='none'/>
     </video>
@@ -245,16 +257,8 @@
       </source>
       <address type='pci' domain='0x0000' bus='0x0a' slot='0x00' function='0x0'/>
     </hostdev>
-    <watchdog model='ib700' action='reset'/>
     <watchdog model='itco' action='reset'/>
     <memballoon model='none'/>
   </devices>
-  <qemu:commandline>
-    <qemu:arg value='-object'/>
-    <qemu:arg value='input-linux,id=mouse1,evdev=/dev/input/by-id/uinput-persist-mouse0'/>
-    <qemu:arg value='-object'/>
-    <qemu:arg value='input-linux,id=kbd1,evdev=/dev/input/by-id/uinput-persist-keyboard0,grab_all=on,repeat=on'/>
-    <qemu:arg value='-object'/>
-    <qemu:arg value='input-linux,id=kbd2,evdev=/dev/input/by-id/uinput-persist-keyboard1,grab_all=on,repeat=on'/>
-  </qemu:commandline>
 </domain>
+
