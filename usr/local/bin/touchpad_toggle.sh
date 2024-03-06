@@ -1,8 +1,5 @@
 #!/bin/bash
 
-PARENT_COMMAND="$(ps -o comm= $PPID)"
-logger $PARENT_COMMAND
-
 declare -i ID
 ID=`xinput list | grep -Eo 'ouchpad\s*id\=[0-9]{1,2}' | grep -Eo '[0-9]{1,2}'`
 declare -i STATE
