@@ -91,7 +91,7 @@ fun! TrimWhitespace()
 	keeppatterns %s/\s\+$//e
 	call winrestview(l:save)
 endfun
-autocmd BufWritePre * if(index(['diff', 'markdown'], &ft)) < 0 | :call TrimWhitespace()
+autocmd BufWritePre * if(index(['diff', 'markdown', 'gitsendemail'], &ft)) < 0 | :call TrimWhitespace()
 
 " Airline
 let g:airline#extensions#tabline#enabled = 1
