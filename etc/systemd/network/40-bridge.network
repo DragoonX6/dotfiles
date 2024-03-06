@@ -4,6 +4,7 @@ Name=br0
 [Network]
 DHCP=yes
 IPV6AcceptRA=yes
+IPv6PrivacyExtensions=kernel
 
 [DHCP]
 UseDNS=no
