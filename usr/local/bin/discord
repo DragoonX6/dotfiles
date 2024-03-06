@@ -1,0 +1,3 @@
+#!/usr/bin/sh
+
+systemd-run --scope -p MemoryMax=2G -p MemorySwapMax=0 --user /usr/bin/discord
