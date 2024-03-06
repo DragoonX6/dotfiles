@@ -1,0 +1,12 @@
+[Unit]
+Description=Thunar file manager
+Documentation=man:Thunar(1)
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/Thunar --daemon
+KillMode=process
+Slice=session.slice
+
+[Install]
+WantedBy=graphical-session.target

@@ -1,0 +1,12 @@
+[Unit]
+Description=fcitx IME
+
+[Service]
+Type=simple
+#Environment=DISPLAY=:0
+Environment=GTK_IM_MODULE=fcitx QT_IM_MODULE=fcitx XMODIFIERS="@im=fcitx"
+ExecStart=/usr/bin/fcitx -D
+Slice=session.slice
+
+[Install]
+WantedBy=graphical-session.target

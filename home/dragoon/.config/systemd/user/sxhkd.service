@@ -1,0 +1,14 @@
+[Unit]
+Description=Simple X hotkey daemon
+
+[Service]
+Type=simple
+#Environment=DISPLAY=:0
+Environment=GTK_IM_MODULE=fcitx
+Environment=QT_IM_MODOULE=fcitx
+Environment=XMODIFIERS=@im=fcitx
+ExecStart=/usr/bin/sxhkd
+Slice=session.slice
+
+[Install]
+WantedBy=graphical-session.target

@@ -1,0 +1,11 @@
+[Unit]
+Description=Benjamin Shapiro's Personal Window Manager
+PartOf=bspwm-session.target
+Wants=bspwm-session.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/true
+Slice=session.slice
+Restart=on-failure

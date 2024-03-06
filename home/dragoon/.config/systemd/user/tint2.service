@@ -1,0 +1,11 @@
+[Unit]
+Description=Tint2 bar
+
+[Service]
+Type=simple
+#Environment=DISPLAY=:0
+ExecStart=/usr/bin/tint2
+Slice=session.slice
+
+[Install]
+WantedBy=graphical-session.target

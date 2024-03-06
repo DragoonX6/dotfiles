@@ -51,7 +51,8 @@ ctrl + shift + F12
 
 # quit bspwm normally
 super + alt + Escape
-	bspc quit
+	systemctl --user stop graphical-session.service; bspc quit
+	#find ~/.config/systemd/user -maxdepth 1 -type f | xargs -n 1 basename | xargs systemctl --user stop &; bspc quit
 
 # close and kill
 super + {_,shift + }w

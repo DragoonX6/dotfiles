@@ -1,36 +1,23 @@
 #! /bin/sh
 
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+
 xsetroot -cursor_name left_ptr &
-
-sxhkd &
-
-compton &
 
 nitrogen --restore &
 
-tint2 &
-
-[ $(uname -n) != judgement ] && qjackctl &
-
-pnmixer &
-[ $(uname -n) = judgement ] && xfce4-power-manager &
-
-thunar --deamon &
+[ $(hostname) = judgement ] && xfce4-power-manager &
 
 setxkbmap -layout us -variant euro -option compose:ralt &
 xset b 100 &
 xset mouse 1 1 &
 numlockx on &
 
-#[ ! -s ~/.mpd/pid ] && mpd &
-
-fcitx-autostart &
-
-parcellite &
-
 bspswallow &
 
-if [ $(uname -n) = judgement ]
+if [ $(hostname) = judgement ]
 then
 	bspc wm -O DP-0 HDMI-0
 	bspc monitor DP-0 -d I II III IV V VI VII VIII IX X
@@ -62,3 +49,7 @@ RATE=$(echo '1000 /' $(xrandr -q | sed -nr "s/(.*\b)([0-9]+\.[0-9]+)(\*?\+)(.*)/
 bspc config pointer_motion_interval $RATE
 
 bspc config external_rules_command "$HOME/.config/bspwm/external_rules"
+
+#find ~/.config/systemd/user -maxdepth 1 -type f | xargs -n 1 basename | xargs systemctl --user start
+
+exec systemctl --user start bspwm-session.service
