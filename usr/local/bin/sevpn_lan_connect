@@ -28,7 +28,7 @@ NEXT_METRIC=$(($DEFAULT_METRIC + 1));
 vpncmd localhost -CLIENT -CMD AccountConnect "$1";
 
 set +e;
-ip -j address | jq --exit-status '.[] | select(.ifname == "'$HOST_DEVICE'") | .addr_info[] | select(.family == "inet6" and .scope == "global")';
+ip -j address | jq --exit-status '.[] | select(.ifname == "'$HOST_DEVICE'") | .addr_info[] | select(.family == "inet6" and .scope == "global")' > /dev/null;
 WANT_IPV6=$?;
 set -e;
 
