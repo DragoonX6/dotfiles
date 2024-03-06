@@ -27,11 +27,7 @@ alt + Print
 
 # Take a screenshot of a selection
 ctrl + Print
-	maim -s | xclip -selection clipboard -t image/png
-
-# Toggle the touchpad
-super + Scroll_Lock
-	touchpad_toggle
+	maim -s -u | xclip -selection clipboard -t image/png
 
 # Lock the screen
 super + l
@@ -86,7 +82,7 @@ super + {t,shift + t,s,f}
 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 
 # set the node flags
-super + ctrl + {m,x,y,z}
+super + ctrl + {m,l,s,p}
 	bspc node -g {marked,locked,sticky,private}
 
 #
@@ -132,7 +128,7 @@ super + ctrl + Return
 
 # focus the next node (alt tab)
 alt + {_,shift +} Tab
-	bspc node -f {next,prev}.local
+	bspc node -f {next,prev}.!hidden.window.local
 
 #
 # preselect
@@ -178,3 +174,7 @@ super + ctrl + d
 
 super + ctrl + b
 	xbacklight -inc 10
+
+# Toggle the touchpad
+super + Scroll_Lock
+	touchpad_toggle
