@@ -25,6 +25,8 @@ if isdirectory(expand(baseRuntimePath . '/bundle/Vundle.vim'))
 	Plugin 'romainl/vim-qf'
 	Plugin 'terryma/vim-multiple-cursors'
 	Plugin 'idanarye/vim-dutyl'
+	Plugin 'xolox/vim-misc'
+	Plugin 'xolox/vim-lua-ftplugin'
 	call vundle#end()
 endif
 
@@ -172,3 +174,5 @@ let g:dutyl_dontHandleIndent = 1
 
 " Snippets
 let g:UltiSnipsSnippetDirectories=[baseRuntimePath . '/UltiSnips']
+
+let g:lua_complete_dynamic = 0
