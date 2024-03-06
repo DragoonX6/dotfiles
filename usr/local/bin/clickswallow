@@ -13,6 +13,6 @@ get_class()
 
 window=$(xwininfo | grep id: | cut -d ' ' -f 4)
 
-echo "$(get_class $window) | $(xwininfo -id "$window" | grep id: | cut -d '"' -f 2) | $window" >> /tmp/swallowed
+echo "$(get_class $window) | $(xwininfo -id "$window" | grep id: | cut -d '"' -f 2) | $window" >> /run/user/$UID/swallowed.lock
 
 bspc node "$window" --flag hidden=on
