@@ -1,0 +1,23 @@
+diff --git a/genkernel-3.5.3.3/gen_initramfs.sh b/genkernel-3.5.3.3/gen_initramfs.sh
+index d4f56db..f4d876f 100755
+--- a/genkernel-3.5.3.3/gen_initramfs.sh
++++ b/genkernel-3.5.3.3/gen_initramfs.sh
+@@ -641,6 +641,18 @@ append_luks() {
+ 		copy_binaries "${TEMP}/initramfs-luks-temp/" /sbin/cryptsetup
+ 	fi
+ 
++	# Copy binaries
++	# Include libgcc_s.so.1 to workaround zfsonlinux/zfs#4749
++	local libgccpath
++	if type gcc-config 2>&1 1>/dev/null; then
++		libgccpath="/usr/lib/gcc/$(s=$(gcc-config -c); echo ${s%-*}/${s##*-})/libgcc_s.so.1"
++	fi
++	if [[ ! -f ${libgccpath} ]]; then
++		libgccpath="/usr/lib/gcc/*/*/libgcc_s.so.1"
++	fi
++
++	copy_binaries "${TEMP}/initramfs-luks-temp" ${libgccpath}
++
+ 	log_future_cpio_content
+ 	find . -print | cpio ${CPIO_ARGS} --append -F "${CPIO}" \
+ 		|| gen_die "appending cryptsetup to cpio"
