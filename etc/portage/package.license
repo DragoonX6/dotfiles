@@ -8,3 +8,4 @@ net-im/telegram-desktop-bin telegram
 net-im/discord-bin all-rights-reserved
 app-arch/unrar unRAR
 sys-firmware/intel-microcode intel-ucode
+sys-kernel/mkinitcpio GPLv2

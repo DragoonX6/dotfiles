@@ -1,44 +1,16 @@
 # Zen kernel
 sys-kernel/zen-sources ~amd64
+app-admin/kconfig-hardened-check **
+
 # LUKS 2
 sys-fs/cryptsetup ~amd64
 
-# required by app-antivirus/clamtk-6.00::gentoo
-# required by app-antivirus/clamtk (argument)
-=dev-perl/LWP-UserAgent-Cached-0.60.0-r1 ~amd64
-# required by app-antivirus/clamtk-6.00::gentoo
-# required by app-antivirus/clamtk (argument)
-=dev-perl/Gtk3-0.34.0 ~amd64
-# required by app-antivirus/clamtk (argument)
-=app-antivirus/clamtk-6.00 ~amd64
-
+# General tools
 media-gfx/maim ~amd64
 x11-misc/slop ~amd64
+app-misc/physlock ~amd64
 
-# C++ dev
-# required by ccls (argument)
-#=dev-util/ccls-9999 **
-
-# C#
-#dev-dotnet/dotnetcore-sdk-bin ~amd64
-#dev-dotnet/dotnetcore-sdk-bin-common ~amd64
-# required by dev-util/msbuild (argument)
-#=dev-dotnet/msbuild-tasks-api-15.3-r1 ~amd64
-# required by dev-util/msbuild (argument)
-#=dev-dotnet/system-collections-immutable-2.0.0_pre-r1 ~amd64
-# required by dev-util/msbuild (argument)
-#=dev-dotnet/msbuild-defaulttasks-15.3-r3 ~amd64
-# required by dev-util/msbuild (argument)
-#=dev-dotnet/system-reflection-metadata-2.0.0_pre-r1 ~amd64
-# required by dev-util/msbuild (argument)
-#=dev-dotnet/msbuild-roslyn-csc-15.3-r1 ~amd64
-# required by dev-util/msbuild (argument)
-#=dev-dotnet/buildtools-1.0.27-r1 ~amd64
-# required by dev-util/msbuild (argument)
-#=dev-dotnet/newtonsoft-json-6.0.8-r1 ~amd64
-# required by dev-util/msbuild (argument)
-#=dev-util/msbuild-15.3-r3 ~amd64
-
-# Hipster garbage
-# required by app-editors/vscode-bin (argument)
-#app-editors/vscode-bin ~amd64
+# Asus tooling
+sys-power/asusctl ~amd64
+sys-power/power-profiles-daemon ~amd64
+sys-power/supergfxctl ~amd64
